@@ -44,7 +44,25 @@ npm run build        # static site in ./out (uses webpack; Turbopack build hung 
 
 ## Redeploy
 
-Push to `main`. The GitHub Actions workflow (`.github/workflows/deploy.yml`) lints, builds and publishes `out/` to GitHub Pages.
+Right now Pages serves the `gh-pages` branch. After editing:
+
+```bash
+git commit -am "Update details" && git push   # save source to main
+npm run deploy                                # lint, build, publish out/ to gh-pages
+```
+
+### Switch to automatic deploys (GitHub Actions)
+
+A ready workflow is in `deploy/github-pages-workflow.yml`. It couldn't be pushed because the local GitHub token lacks the `workflow` scope. To enable it:
+
+```bash
+gh auth refresh -s workflow
+mkdir -p .github/workflows && git mv deploy/github-pages-workflow.yml .github/workflows/deploy.yml
+git commit -m "Deploy via Actions" && git push
+gh api -X PUT repos/jamieparknz/breaking-brisbane/pages -f build_type=workflow
+```
+
+After that every push to `main` lints, builds and publishes.
 If the repo is renamed, change `repo` in `next.config.ts` (it sets `basePath`) and `site.url`.
 
 ## Screenshots

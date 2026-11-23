@@ -5,7 +5,7 @@ export function JsonLd() {
     "@context": "https://schema.org",
     "@type": "DanceSchool",
     name: site.brand,
-    description: "Weekend breaking (breakdance) classes for kids, teens and adult beginners on Brisbane's north side.",
+    description: "Weekend breaking (breakdance) classes for beginners on Brisbane's north side.",
     url: site.url + "/",
     areaServed: site.suburbsServed.map((s) => ({ "@type": "Place", name: `${s}, QLD` })),
     address: { "@type": "PostalAddress", addressLocality: "Brisbane", addressRegion: "QLD", addressCountry: "AU" },

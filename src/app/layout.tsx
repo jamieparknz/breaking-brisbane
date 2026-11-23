@@ -9,7 +9,7 @@ import "./globals.css";
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"], display: "swap" });
 const shoulders = Big_Shoulders({ variable: "--font-shoulders", weight: ["800", "900"], subsets: ["latin"], display: "swap" });
 
-const description = "Weekend breaking classes for kids, teens and adult beginners on Brisbane's north side. Toprock, footwork, freezes, power basics and cypher culture with Jamie.";
+const description = "Weekend breaking classes for beginners on Brisbane's north side. Toprock, footwork, freezes, power basics and cypher culture with Jamie.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url + "/"),

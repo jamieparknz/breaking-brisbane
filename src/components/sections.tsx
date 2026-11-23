@@ -1,131 +1,91 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ShieldCheck, Smartphone } from "lucide-react";
-import { site, groups, pricing, isPlaceholder } from "@/content/site";
+import { site, groups, pricing, isPlaceholder, jamiePhoto, asset } from "@/content/site";
 import { Section, SectionHead } from "@/components/section";
 import { Tbc } from "@/components/tbc";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CypherPlan } from "@/components/cypher-plan";
 import trainShot from "@/assets/app/01-train.png";
 import movesShot from "@/assets/app/06-book-moves.png";
-import roundShot from "@/assets/app/03-round.png";
 
-const moves = [
+// The class arc is a real sequence, so it is numbered.
+const arc = [
+  { name: "Warm up", body: "Joints, wrists and shoulders first. Every class." },
   { name: "Toprock", body: "The standing steps that open every round. Groove, timing and style." },
   { name: "Footwork", body: "Moving on the floor with control: the six step, threads and your own variations." },
   { name: "Freezes", body: "Holding shapes like the baby freeze and chair freeze, built up step by step." },
   { name: "Power basics", body: "An intro to spins and rotations, only with proper progressions and mats." },
-  { name: "Musicality", body: "Hearing the beat and the breaks, and dancing to the music, not over it." },
-  { name: "Cypher culture", body: "Cyphers, battle etiquette, respect, and where hip hop comes from." },
+  { name: "Cypher", body: "Music on, circle up. Hearing the breaks, battle etiquette, respect, and where hip hop comes from." },
 ];
 
 export function Learn() {
   return (
-    <Section id="learn" labelledBy="learn-title">
-      <SectionHead
-        id="learn-title"
-        title="What you learn"
-        lede="Every class runs the same arc: warm up, toprock, footwork, freezes, a power basic, then a cypher with music and respect."
-      />
-      <dl className="border-t border-ink">
-        {moves.map((m) => (
-          <div key={m.name} className="grid gap-2 border-b border-line py-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] md:items-baseline md:gap-12">
-            <dt className="font-display text-4xl uppercase leading-none sm:text-5xl">{m.name}</dt>
-            <dd className="max-w-prose text-lg text-muted-foreground">{m.body}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="mt-8 text-sm text-muted-foreground">Breaking made its Olympic debut at Paris 2024.</p>
-    </Section>
-  );
-}
-
-export function WhoFor() {
-  return (
-    <Section id="who" labelledBy="who-title" className="bg-white">
-      <SectionHead id="who-title" title="Who it's for" lede="Small groups split by age. Total beginners welcome in every group." />
-      <Tabs defaultValue={groups[0].id} className="gap-8">
-        <TabsList className="!h-auto w-fit max-w-full flex-wrap justify-start gap-1 rounded-lg bg-muted p-1">
-          {groups.map((g) => (
-            <TabsTrigger key={g.id} value={g.id} className="!h-10 flex-none rounded-md px-4 text-sm data-[state=active]:bg-ink data-[state=active]:text-paper data-[state=active]:shadow-none">{g.name}</TabsTrigger>
-          ))}
-        </TabsList>
-        {groups.map((g) => (
-          <TabsContent key={g.id} value={g.id} className="mt-4 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
+    <Section id="learn" labelledBy="learn-title" className="bg-white">
+      <SectionHead id="learn-title" title={<>Every class,<br />same arc</>} lede="An hour that builds from the ground up. Beginners do the first version of each part; you get harder options as you progress." />
+      <ol className="grid border-t-2 border-ink md:grid-cols-2 md:gap-x-16">
+        {arc.map((m, i) => (
+          <li key={m.name} className="grid grid-cols-[3.5rem_1fr] items-baseline gap-x-4 border-b border-line py-6 sm:grid-cols-[5rem_1fr]">
+            <span className="font-display text-4xl font-black text-signal sm:text-5xl" aria-hidden>{i + 1}</span>
             <div>
-              <p className="font-display text-6xl uppercase leading-none sm:text-7xl">Ages {g.ages}</p>
-              <p className="mt-4 max-w-md text-xl leading-relaxed">{g.focus}</p>
+              <h3 className="font-display text-4xl font-extrabold uppercase leading-none sm:text-5xl">{m.name}</h3>
+              <p className="mt-2 max-w-md text-base leading-relaxed text-muted-foreground">{m.body}</p>
             </div>
-            <ul className="space-y-3 text-base">
-              <li className="flex gap-3"><Check className="mt-1 size-4 shrink-0" aria-hidden />Levels: beginner first, with harder options as you progress</li>
-              <li className="flex gap-3"><Check className="mt-1 size-4 shrink-0" aria-hidden />Warm up and cool down every class</li>
-              <li className="flex gap-3"><Check className="mt-1 size-4 shrink-0" aria-hidden />{g.kids ? "Parents welcome to watch. Parent stays on site for under 8s." : "Come solo or bring a friend. No fitness test."}</li>
-              {g.kids && <li className="flex gap-3"><ShieldCheck className="mt-1 size-4 shrink-0" aria-hidden />Kids classes start once Blue Card and insurance are in place</li>}
-            </ul>
-          </TabsContent>
+          </li>
         ))}
-      </Tabs>
+      </ol>
+      <p className="mt-8 text-sm text-muted-foreground">Breaking made its Olympic debut at Paris 2024.</p>
     </Section>
   );
 }
 
 export function Timetable() {
   return (
-    <Card className="dark gap-0 overflow-hidden rounded-xl border border-border bg-ink py-0 ring-0 text-foreground shadow-none">
-      <CardHeader className="border-b border-border px-6 py-5">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <CardTitle className="font-display text-3xl font-normal uppercase">Weekend timetable</CardTitle>
-          <Badge variant="outline" className="border-signal text-signal">Starting soon</Badge>
-        </div>
-        <CardDescription className="mt-2 text-muted-foreground">
-          <Tbc value={site.dayTime} label="Day TBC" /> at <Tbc value={site.venue} label="Venue TBC" />, {site.area}. Terms <Tbc value={site.termDates} />.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="px-0">
-        <table className="w-full text-left">
-          <caption className="sr-only">Class times by group</caption>
-          <thead className="text-xs text-muted-foreground">
-            <tr><th scope="col" className="px-6 py-3 font-medium">Time</th><th scope="col" className="px-6 py-3 font-medium">Group</th><th scope="col" className="hidden px-6 py-3 font-medium sm:table-cell">Focus</th></tr>
-          </thead>
-          <tbody>
-            {groups.map((g) => (
-              <tr key={g.id} className="border-t border-border">
-                <td className="px-6 py-5 font-display text-2xl text-signal"><Tbc value={g.time} /></td>
-                <th scope="row" className="px-6 py-5 text-base font-medium">{g.name}</th>
-                <td className="hidden px-6 py-5 text-sm text-muted-foreground sm:table-cell">{g.focus}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </CardContent>
-    </Card>
+    <div>
+      <p className="mb-4 max-w-xl text-lg text-white/75">
+        <Tbc value={site.dayTime} label="Day TBC" /> at <Tbc value={site.venue} label="venue TBC" />, {site.area}. Term dates <Tbc value={site.termDates} />.
+      </p>
+      <table className="w-full border-collapse text-left">
+        <caption className="sr-only">Class times by group</caption>
+        <thead>
+          <tr className="border-y border-white/25 text-sm text-white/60">
+            <th scope="col" className="py-3 pr-4 font-medium">Time</th>
+            <th scope="col" className="py-3 pr-4 font-medium">Group</th>
+            <th scope="col" className="hidden py-3 font-medium md:table-cell">What we focus on</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map((g) => (
+            <tr key={g.id} className="border-b border-white/25 align-top">
+              <td className="w-28 py-6 pr-4 font-display text-4xl font-extrabold sm:w-40 sm:text-5xl"><Tbc value={g.time} /></td>
+              <th scope="row" className="py-6 pr-4 font-normal">
+                <span className="block font-display text-4xl font-extrabold uppercase leading-none sm:text-5xl">{g.name}</span>
+                <span className="mt-2 block text-base text-white/70 md:hidden">{g.focus}</span>
+                <span className="mt-2 block text-sm text-white/60">{g.kids ? "Parents welcome to watch. Starts once Blue Card and insurance are in place." : "Come solo or bring a friend. No fitness test."}</span>
+              </th>
+              <td className="hidden max-w-xs py-6 text-lg leading-snug text-white/80 md:table-cell">{g.focus}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
 export function Pricing() {
   return (
-    <div className="grid gap-4 md:grid-cols-3">
-      {pricing.map((p) => {
-        const featured = p.id === "term";
-        return (
-          <Card key={p.id} className={featured ? "rounded-xl border border-ink bg-ink text-paper shadow-none ring-0 [--card-spacing:--spacing(6)]" : "rounded-xl border border-line shadow-none ring-0 [--card-spacing:--spacing(6)]"}>
-            <CardHeader>
-              <CardTitle className="text-base font-medium">{p.name}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="flex h-16 items-end font-display text-6xl leading-none">
-                {isPlaceholder(p.price) ? <Tbc value={p.price} className="text-3xl" /> : p.price}
-              </p>
-              <p className={featured ? "mt-3 min-h-5 text-sm text-paper/70" : "mt-3 min-h-5 text-sm text-muted-foreground"}>{p.unit}</p>
-            </CardContent>
-            <CardFooter className={featured ? "mt-auto border-t border-paper/15 bg-transparent py-5 text-sm text-paper/80" : "mt-auto border-t border-line bg-transparent py-5 text-sm text-muted-foreground"}>
-              <p>{p.note}</p>
-            </CardFooter>
-          </Card>
-        );
-      })}
+    <div>
+      <h3 className="font-display text-3xl font-extrabold uppercase">Prices</h3>
+      <dl className="mt-4 border-t border-white/25">
+        {pricing.map((p) => (
+          <div key={p.id} className="grid grid-cols-[1fr_auto] gap-x-6 border-b border-white/25 py-5">
+            <dt className="text-lg font-medium">{p.name}<span className="mt-1 block text-sm font-normal text-white/60">{p.note}</span></dt>
+            <dd className="text-right">
+              <span className="font-display text-5xl font-black leading-none">{isPlaceholder(p.price) ? <Tbc value={p.price} className="text-2xl" /> : p.price}</span>
+              {p.unit && <span className="block text-sm text-white/60">{p.unit}</span>}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }
@@ -133,14 +93,17 @@ export function Pricing() {
 export function ClassesBlock({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   const H = headingLevel;
   return (
-    <Section id="classes" labelledBy="classes-title">
-      <div className="mb-12 grid gap-4 md:grid-cols-[1fr_minmax(0,28rem)] md:items-end md:gap-12">
-        <H id="classes-title" className="text-h2">Classes and prices</H>
-        <p className="text-lg leading-relaxed text-muted-foreground">Times, venue and prices are being locked in now. Register interest and you will hear first.</p>
+    <Section id="classes" dark labelledBy="classes-title" className="grain">
+      <div className="mb-12 grid gap-6 md:grid-cols-12">
+        <H id="classes-title" className="text-h2 md:col-span-8">Weekend<br />timetable</H>
+        <p className="max-w-sm text-lg leading-relaxed text-white/70 md:col-span-4 md:self-end">Small groups split by age. Total beginners welcome in every group. Times and venue are being locked in now.</p>
       </div>
-      <div className="grid gap-12">
-        <Timetable />
-        <Pricing />
+      <div className="grid gap-16 lg:grid-cols-12">
+        <div className="lg:col-span-8"><Timetable /></div>
+        <div className="lg:col-span-4">
+          <Pricing />
+          <Button asChild variant="tape" size="lg" className="mt-8 h-13 w-full px-7"><Link href="/#register">Book a free class</Link></Button>
+        </div>
       </div>
     </Section>
   );
@@ -160,28 +123,25 @@ export function BringAndSafety() {
     { label: "First aid certificate", ok: site.firstAidCurrent, pending: "Being arranged" },
   ];
   return (
-    <Section id="safety" labelledBy="safety-title" className="bg-white">
-      <div className="grid gap-16 md:grid-cols-2">
-        <div>
-          <h2 className="text-h2">What to bring</h2>
-          <ul className="mt-8 divide-y divide-line border-y border-line">
-            {bring.map((b) => (
-              <li key={b} className="flex gap-3 py-4 text-lg"><Check className="mt-1.5 size-4 shrink-0" aria-hidden />{b}</li>
-            ))}
+    <Section id="safety" labelledBy="safety-title">
+      <div className="grid gap-16 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <h2 className="text-h2">Bring</h2>
+          <ul className="mt-8 border-t-2 border-ink">
+            {bring.map((b) => <li key={b} className="border-b border-line py-4 text-lg">{b}</li>)}
           </ul>
         </div>
-        <div>
+        <div className="md:col-span-6 md:col-start-7">
           <h2 id="safety-title" className="text-h2">Safety</h2>
-          <ul className="mt-8 space-y-3 text-lg">
-            <li>Small groups, warm ups every class, mats under freezes.</li>
-            <li>No inverted moves without the progressions first.</li>
-            <li>Parents welcome to stay. Photos only with your consent.</li>
-          </ul>
-          <dl className="mt-8 divide-y divide-line rounded-lg border border-line">
+          <p className="mt-8 max-w-lg text-xl leading-snug">
+            Small groups, warm ups every class, mats under freezes. No inverted moves without the progressions first.
+            Parents welcome to stay. Photos only with your consent.
+          </p>
+          <dl className="mt-8 border-t-2 border-ink">
             {status.map((s) => (
-              <div key={s.label} className="flex items-center justify-between gap-4 px-4 py-3">
+              <div key={s.label} className="flex items-baseline justify-between gap-4 border-b border-line py-3">
                 <dt className="font-medium">{s.label}</dt>
-                <dd className="text-sm text-muted-foreground">{s.ok ? "In place" : s.pending}</dd>
+                <dd className={s.ok ? "text-sm font-medium" : "text-sm text-muted-foreground"}>{s.ok ? "In place" : s.pending}</dd>
               </div>
             ))}
           </dl>
@@ -195,33 +155,22 @@ export function PracticeApp() {
   const shots = [
     { src: movesShot, alt: "Shadow Cypher move book listing toprock, footwork and freezes" },
     { src: trainShot, alt: "Shadow Cypher training screen with a suggested 15 minute foundations session" },
-    { src: roundShot, alt: "Shadow Cypher round timer during a practice session" },
   ];
   return (
-    <Section id="app" dark labelledBy="app-title" className="overflow-hidden">
-      <div className="grid gap-16 md:grid-cols-[1fr_1.2fr] md:items-center">
-        <div>
-          <Badge variant="outline" className="mb-6 gap-1.5 border-border"><Smartphone className="size-3.5" aria-hidden />Free for students</Badge>
+    <Section id="app" labelledBy="app-title" className="overflow-hidden bg-white">
+      <div className="grid gap-14 md:grid-cols-12 md:items-center">
+        <div className="md:col-span-5">
           <h2 id="app-title" className="text-h2">Practise between classes</h2>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-            {site.practiceApp.name} is a free breaking practice app for students. Timed shadow sessions, a move book and
-            rounds to drill what you learned on the weekend. It runs in your browser, no account needed.
+            {site.practiceApp.name} is a free practice app for students. Timed shadow sessions, a move book and
+            rounds to drill what you learned on the weekend. Runs in your browser, no account needed.
           </p>
-          <Button asChild size="lg" className="mt-8 h-12 bg-signal px-6 text-base text-ink hover:bg-signal/90">
-            <a href={site.practiceApp.url}>Open {site.practiceApp.name}</a>
-          </Button>
+          <Button asChild variant="line" size="lg" className="mt-8 h-13 px-7"><a href={site.practiceApp.url}>Open {site.practiceApp.name}</a></Button>
         </div>
-        <div className="relative flex justify-center gap-4 md:justify-end">
+        <div className="flex gap-4 md:col-span-6 md:col-start-7 md:justify-end">
           {shots.map((s, i) => (
-            <div
-              key={s.alt}
-              className={[
-                "aspect-[9/16.6] w-[44%] shrink-0 overflow-hidden rounded-[1.75rem] border border-border bg-black p-1.5 sm:w-48",
-                i === 1 ? "-mt-0 md:-mt-10" : "mt-10",
-                i === 2 ? "hidden sm:block" : "",
-              ].join(" ")}
-            >
-              <Image src={s.src} alt={s.alt} sizes="(min-width: 640px) 192px, 44vw" className="h-full w-full rounded-[1.35rem] object-cover object-top" placeholder="blur" />
+            <div key={s.alt} className={`aspect-[9/16.6] w-1/2 max-w-56 shrink-0 overflow-hidden rounded-[1.6rem] border-[6px] border-ink bg-ink ${i ? "mt-12" : ""}`}>
+              <Image src={s.src} alt={s.alt} sizes="(min-width: 768px) 224px, 45vw" className="h-full w-full rounded-[1.1rem] object-cover object-top" placeholder="blur" />
             </div>
           ))}
         </div>
@@ -231,20 +180,32 @@ export function PracticeApp() {
 }
 
 export function AboutJamie() {
+  const years = isPlaceholder(site.years) ? null : site.years;
+  const crew = isPlaceholder(site.crew) ? null : site.crew;
   return (
-    <Section id="about" labelledBy="about-title">
-      <div className="grid gap-10 md:grid-cols-[1fr_1.3fr]">
-        <h2 id="about-title" className="text-h2">Meet {site.instructor}</h2>
-        <div className="space-y-4 text-lg leading-relaxed">
-          <p>
-            {site.instructor} is a Korean Australian breaker based in Brisbane. His classes focus on safe progressions,
-            confidence, music and respect for hip hop culture.
-          </p>
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line text-base">
-            <div className="bg-paper p-4"><dt className="text-sm text-muted-foreground">Years breaking</dt><dd className="mt-1 font-medium"><Tbc value={site.years} /></dd></div>
-            <div className="bg-paper p-4"><dt className="text-sm text-muted-foreground">Crew</dt><dd className="mt-1 font-medium"><Tbc value={site.crew} /></dd></div>
-          </dl>
-          {!isPlaceholder(site.bio) && <p className="text-muted-foreground">{site.bio}</p>}
+    <Section id="about" labelledBy="about-title" className="grain">
+      <div className="grid gap-12 md:grid-cols-12">
+        <div className="md:col-span-5">
+          {jamiePhoto ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={asset(jamiePhoto)} alt={`${site.instructor} breaking`} loading="lazy" className="aspect-[4/5] w-full object-cover grayscale" />
+          ) : (
+            <div className="aspect-square w-full max-w-md bg-white p-6 md:p-10"><CypherPlan className="h-full w-full text-ink" /></div>
+          )}
+        </div>
+        <div className="md:col-span-6 md:col-start-7">
+          <h2 id="about-title" className="text-h2">Hi, I&apos;m {site.instructor}</h2>
+          <div className="mt-8 space-y-5 text-xl leading-relaxed">
+            <p>I&apos;m a Korean Australian breaker based in Brisbane.{years && ` I've been breaking for ${years} years.`}{crew && ` I rep ${crew}.`}</p>
+            {!isPlaceholder(site.bio) && <p>{site.bio}</p>}
+            <p>My classes are about safe progressions, confidence, music and respect for hip hop culture. You don&apos;t need to be fit or flexible to start. You need to turn up.</p>
+          </div>
+          {(!years || !crew) && (
+            <dl className="mt-10 grid grid-cols-2 border-t-2 border-ink text-base">
+              <div className="border-b border-line py-3"><dt className="text-sm text-muted-foreground">Years breaking</dt><dd className="mt-1 font-medium"><Tbc value={site.years} /></dd></div>
+              <div className="border-b border-line py-3"><dt className="text-sm text-muted-foreground">Crew</dt><dd className="mt-1 font-medium"><Tbc value={site.crew} /></dd></div>
+            </dl>
+          )}
         </div>
       </div>
     </Section>
@@ -253,9 +214,9 @@ export function AboutJamie() {
 
 export function CtaBand() {
   return (
-    <div className="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-line p-6">
+    <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t-2 border-ink pt-6">
       <p className="text-lg">Still have a question?</p>
-      <Button asChild size="lg" variant="outline" className="h-11"><Link href="/#register">Ask when you register</Link></Button>
+      <Button asChild variant="line" size="lg" className="h-12"><Link href="/#register">Ask when you register</Link></Button>
     </div>
   );
 }

@@ -9,7 +9,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-display: var(--font-shoulders), "Arial Narrow", sans-serif;
   --color-ink: var(--ink);
   --color-paper: var(--paper);
   --color-signal: var(--signal);
@@ -54,10 +54,11 @@
 
 :root {
   /* Palette: ink, paper, one accent (cypher yellow). */
-  --ink: #09090b;
-  --paper: #f3f3f0;
-  --signal: #ffd60a;
-  --line: #dcdcd6;
+  /* Lino floor, black, white, hall-tape red (action only). */
+  --ink: #0a0a0a;
+  --paper: #e8e7e3;
+  --signal: #d42a20;
+  --line: #c9c8c2;
   --background: var(--paper);
   --foreground: var(--ink);
   --card: #ffffff;
@@ -69,14 +70,14 @@
   --secondary: #e7e7e2;
   --secondary-foreground: var(--ink);
   --muted: #e7e7e2;
-  --muted-foreground: #55555c;
+  --muted-foreground: #4a4a48;
   --accent: #e7e7e2;
   --accent-foreground: var(--ink);
   --destructive: #c4281c;
   --border: var(--line);
   --input: #c9c9c2;
   --ring: var(--ink);
-  --radius: 0.5rem;
+  --radius: 0.125rem;
 }
 
 .dark {
@@ -97,7 +98,7 @@
   --destructive: #ff6b5e;
   --border: #27272a;
   --input: #3f3f46;
-  --ring: var(--signal);
+  --ring: #ffffff;
 }
 
 @layer base {
@@ -118,14 +119,19 @@
   p { text-wrap: pretty; }
 }
 
-/* Type scale (1.25 minor third on 16px base, display steps larger) */
-@utility text-display { font-family: var(--font-display); font-weight: 400; line-height: 0.86; letter-spacing: -0.01em; text-transform: uppercase; }
-@utility text-h2 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; line-height: 0.95; font-size: clamp(2.5rem, 6vw, 4.5rem); }
+/* Type: Big Shoulders Display, set tight. */
+@utility text-display { font-family: var(--font-display); font-weight: 900; line-height: 0.82; letter-spacing: -0.015em; text-transform: uppercase; }
+@utility text-h2 { font-family: var(--font-display); font-weight: 800; text-transform: uppercase; line-height: 0.88; letter-spacing: -0.01em; font-size: clamp(3rem, 8vw, 6.5rem); }
 
-/* Cypher ring: the one piece of ambient motion */
-@keyframes cypher-spin { to { transform: rotate(360deg); } }
-.cypher-spin { animation: cypher-spin 28s linear infinite; transform-origin: 50% 50%; }
+/* Paper grain: static SVG noise, no motion. */
+.grain { position: relative; isolation: isolate; }
+.grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1; opacity: .35; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark .grain::after, .grain.dark::after { mix-blend-mode: screen; opacity: .12; }
+
 @media (prefers-reduced-motion: reduce) {
-  .cypher-spin { animation: none; }
   html { scroll-behavior: auto; }
+  .hero-video { display: none; }
 }

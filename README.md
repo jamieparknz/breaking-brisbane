@@ -4,7 +4,7 @@ Static Next.js (App Router) site for Jamie's weekend breaking classes, Brisbane 
 Live: https://jamieparknz.github.io/breaking-brisbane/
 
 Stack: Next.js 16 (`output: "export"`), Tailwind CSS v4, shadcn/ui (Radix), Framer Motion, react-hook-form + zod, lucide icons.
-Fonts: Anton (headlines) + Geist (everything else). Palette: ink `#09090b`, paper `#f3f3f0`, cypher yellow `#ffd60a`.
+Fonts: Big Shoulders (headlines) + Geist (everything else). Palette: ink `#0a0a0a`, lino `#e8e7e3`, white, tape red `#d42a20` (actions only). Design rationale: `DESIGN-RESEARCH.md`. Adding videos/photos: `VIDEOS.md`.
 
 ## Fill in the placeholders
 

@@ -83,4 +83,29 @@ export const pricing = [
   { id: "term", name: "Term pack", price: "[PRICE_TERM]", unit: "per term", note: "Best for steady progress. Term length and sibling discount to be confirmed." },
 ] as const;
 
+/**
+ * VIDEO. See VIDEOS.md. Leave heroVideo null and videos empty and the site shows
+ * the type-led hero and hides the "Watch Jamie" reel. Add clips and they appear.
+ * Paths are relative to /public, e.g. "/video/hero.mp4".
+ */
+export type Video =
+  | { kind: "file"; src: string; poster: string; title: string }
+  | { kind: "youtube"; id: string; title: string; poster?: string }
+  | { kind: "instagram"; url: string; title: string; poster?: string };
+
+export const heroVideo: { src: string; poster: string } | null = null;
+// e.g. { src: "/video/hero.mp4", poster: "/video/hero.jpg" }
+
+export const videos: Video[] = [
+  // { kind: "file", src: "/video/reel-1.mp4", poster: "/video/reel-1.jpg", title: "Toprock in the cypher" },
+  // { kind: "youtube", id: "dQw4w9WgXcQ", title: "Battle round" },
+  // { kind: "instagram", url: "https://www.instagram.com/reel/XXXXXXXX/", title: "Footwork drill", poster: "/video/ig-1.jpg" },
+];
+
+/** Photo of Jamie for the "Meet Jamie" section, e.g. "/photos/jamie.jpg". null shows a drawn figure instead. */
+export const jamiePhoto: string | null = null;
+
+/** Prefix a /public path with the GitHub Pages base path. */
+export const asset = (path: string) => (path.startsWith("http") ? path : `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`);
+
 export const isPlaceholder = (v: string) => /^\[.*\]$/.test(v.trim()) || v.includes("[");

@@ -50,8 +50,8 @@ export function RegisterForm() {
 
   if (status === "sent") {
     return (
-      <div role="status" className="rounded-xl border border-border p-8">
-        <p className="font-display text-4xl uppercase">You&apos;re on the list</p>
+      <div role="status" className="border-l-4 border-signal pl-6 py-2">
+        <p className="text-h2">You&apos;re on the list</p>
         <p className="mt-3 text-muted-foreground">{site.instructor} will email you when times and the venue are confirmed.</p>
       </div>
     );
@@ -120,15 +120,15 @@ export function RegisterForm() {
           </FormItem>
         )} />
         {status === "error" && (
-          <p role="alert" className="rounded-lg border border-destructive/40 p-4 text-sm text-destructive">
+          <p role="alert" className="border-l-4 border-destructive p-4 text-sm text-destructive">
             {isPlaceholder(site.formEndpoint)
               ? "Registrations open soon. The form isn't connected yet, so nothing was sent."
               : "That didn't send. Check your connection and try again."}
           </p>
         )}
-        <Button type="submit" size="lg" disabled={form.formState.isSubmitting} className="h-12 w-full bg-signal text-base text-ink hover:bg-signal/90 sm:w-auto sm:justify-self-start sm:px-8">
+        <Button type="submit" variant="tape" size="lg" disabled={form.formState.isSubmitting} className="h-13 w-full sm:w-auto sm:justify-self-start sm:px-8">
           {form.formState.isSubmitting && <Loader2 className="size-4 animate-spin" aria-hidden />}
-          Register interest
+          Book my free class
         </Button>
         <p className="text-xs text-muted-foreground">Your details are only used to contact you about classes.</p>
       </form>
